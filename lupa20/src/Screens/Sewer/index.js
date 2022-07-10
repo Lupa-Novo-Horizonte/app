@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import { request, PERMISSIONS} from 'react-native-permissions';
 import sharedStyles from '../sharedStyles'
 import SelectDropdown from 'react-native-select-dropdown';
-import {SafeAreaView, View, Text, ScrollView, TouchableOpacity, Modal, Alert} from 'react-native';
+import {SafeAreaView, View, Text, ScrollView, TouchableOpacity, Modal, Alert, Dimensions} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 import Geolocation from '@react-native-community/geolocation';
-import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 import TopBar from '../../Components/CustomTopBarWithBack';
 import HorizontalBar from '../../Components/HorizontalBar';
@@ -20,7 +20,6 @@ export default () => {
     const backTo = 'Home';
 
     const yesNo = ["Sim", "Não"];
-    const numbers = [1,2,3,4,5,6,7];
     const [ddl01, setDdl01] = useState();
     const [ddl02, setDdl02] = useState();
     const [ddl03, setDdl03] = useState();
@@ -71,15 +70,9 @@ export default () => {
 
     // Map config    
     const navigation = useNavigation();
-    const [initialRegion, setInitialRegion] = useState({
-        coords:{
-        latitude: -10.281349434675963,
-        longitude: -51.04632055626981,
-        latitudeDelta: 10.000,
-        longitudeDelta: 10.000
-        }
-    });
+    const longitudeDelta = 0.00045 * (Dimensions.get('window').width / Dimensions.get('window').height)
     
+
     const [markerRegion, setMarketRegion] = useState({
         coords:null
     });
@@ -93,17 +86,23 @@ export default () => {
         );
 
         if(result == 'granted'){
-        Geolocation.getCurrentPosition((info) =>{
+            Geolocation.getCurrentPosition((info) =>{
             const region = {
                 coords:{
                     latitude: info.coords.latitude,
                     longitude: info.coords.longitude,
-                    latitudeDelta: 0.00001,
-                    longitudeDelta: 0.00001
+                    latitudeDelta: 0.00045,
+                    longitudeDelta: 0.00045
                 }
             };
             setMarketRegion(region);
-        })
+            },
+            error => console.log(error),
+            {
+                enableHighAccuracy: true,
+                timeout: 2000,
+                maximumAge: 3600000
+            })
         }
         else{
             console.log('Not granted: ' + result);
@@ -124,11 +123,11 @@ export default () => {
                         loadingIndicatorColor="#092654"
                         region={markerRegion.coords}
                         style={{
-                        flex: 1,
-                        minHeight: 200
+                            flex: 1,
+                            minHeight: 200
                         }}
                         showsUserLocation={true}
-                        onPress={(e) => setMarketRegion({ coords: { latitude: e.nativeEvent.coordinate.latitude, longitude: e.nativeEvent.coordinate.longitude, longitudeDelta: 0.00001, latitudeDelta: 0.00001}})}
+                        onPress={(e) => setMarketRegion({ coords: { latitude: e.nativeEvent.coordinate.latitude, longitude: e.nativeEvent.coordinate.longitude, longitudeDelta: 0.00045, latitudeDelta: 0.00045}})}
                         onMapLoaded={(e) => handleLocationFinder()}
                     >
                         {   

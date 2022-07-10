@@ -48,8 +48,13 @@ export default () => {
     }
     else if (passwordField != confirmPasswordField)
     {
-      changeModalVisible(true);
-      setMessage('Ambos os campos devem ser iguais.');
+        changeModalVisible(true);
+        setMessage('Ambos os campos devem ser iguais.');
+    }
+    else if(passwordField.length < 4)
+    {
+        changeModalVisible(true);
+        setMessage('Tamanho mínimo para senha deve ser 4 dígitos.');
     }
     else
     {

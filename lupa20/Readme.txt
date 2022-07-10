@@ -20,6 +20,7 @@ https://github.com/Lupa-Novo-Horizonte/app
 4. Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 5. npm install react-native-eject
 6. npm i --save-dev @react-native-community/cli
+7. adb devices
 	
 ::Install libraries in order to load the app correctly
 1. npm install react-native-geolocation-service
@@ -40,6 +41,7 @@ https://github.com/Lupa-Novo-Horizonte/app
 16. npm install @react-native-community/geolocation 
 17. npm install @react-navigation/native
 18. npm install react-native-select-dropdown
+19. npm install react-native-math --legacy-peer-deps
 
 *In case needed use "--legacy-peer-deps" at the end of each command for compactibility reason.
 

@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import { Platform } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import { Platform, View, Text } from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
 import { request, PERMISSIONS} from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import Api from '../../Api';
 import { Container } from './styles';
+import styled from 'styled-components';
 
 export default () => {
        
@@ -16,16 +17,11 @@ export default () => {
 
   //Map setup
   const [region, setRegion] = useState({
-    initial:{
-    latitude: 0.095870,
-    longitude: -51.042781,
-    latitudeDelta: 10.01,
-    longitudeDelta: 10.01
-    }
+    coords:null
   });
   
   // My location
-  const getMyLocation = async () => {
+  const handleLocationFinder = async () => {
     let result = await request(
       Platform.OS === 'ios' ?
         PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
@@ -34,19 +30,26 @@ export default () => {
     );
 
     if(result == 'granted'){
-      Geolocation.getCurrentPosition((info) =>{
-        setRegion({initial:{ latitude:info.coords.latitude, longitude:info.coords.longitude, latitudeDelta:0.01, longitudeDelta: 0.01}});
-      },
-      error => console.log(error),
-      {
-          enableHighAccuracy: true,
-          timeout: 2000,
-          maximumAge: 3600000
-      }
-      )
+        Geolocation.getCurrentPosition((info) =>{
+          const region = {
+            coords:{
+                latitude: info.coords.latitude,
+                longitude: info.coords.longitude,
+                latitudeDelta: 0.001,
+                longitudeDelta: 0.001
+            }
+        };
+        setRegion(region);
+        },
+        error => console.log(error),
+        {
+            enableHighAccuracy: true,
+            timeout: 2000,
+            maximumAge: 3600000
+        })
     }
     else{
-      console.log(result);
+      console.log('Not granted: ' + result);
     }
   }
 
@@ -71,13 +74,26 @@ export default () => {
   }, [])
 
   var renderMarkers = markers.map((item, index) => { 
+
+        let question1 = item.description.split('|')[0];
+        let question2 = item.description.split('|')[1];
+        let question3 = item.description.split('|')[2];
+        let question4 = item.description.split('|')[3];
+
         return(
           <Marker
             key={index}
-            coordinate={{ latitude: item.latitude, longitude: item.longitude }}
-            title={item.title}
-            description={item.description}
-          />
+            coordinate={{ latitude: item.latitude, longitude: item.longitude }}>
+              <Callout>
+              <View style={{height: 120, width: 210}}>
+                <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
+                <Text>- {question1}</Text>
+                <Text>- {question2}</Text>
+                <Text>- {question3}</Text>
+                <Text>- {question4}</Text>
+              </View>
+              </Callout>
+            </Marker>
         )
     });
   
@@ -93,14 +109,16 @@ export default () => {
         showsMyLocationButton={true}
         loadingEnabled={true}
         loadingIndicatorColor="#092654"
-        initialRegion={region.initial}
+        region={region.coords}
+        zoomEnabled={true}
+        scrollEnabled={true}
+        showsScale={true}
         style={{
           flex: 1,
           minHeight: 200
         }}
         showsUserLocation={true}
-        //onMapReady={(e) => getMarkers()}
-        onMapLoaded={(e) => getMyLocation()}
+        onMapLoaded={(e) => handleLocationFinder()}
       >      
       {     
          renderMarkers

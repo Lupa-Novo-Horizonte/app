@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 import Geolocation from '@react-native-community/geolocation';
-import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 import TopBar from '../../Components/CustomTopBarWithBack';
 import HorizontalBar from '../../Components/HorizontalBar';
@@ -98,8 +98,8 @@ export default () => {
                 coords:{
                     latitude: info.coords.latitude,
                     longitude: info.coords.longitude,
-                    latitudeDelta: 0.00001,
-                    longitudeDelta: 0.00001
+                    latitudeDelta: 0.00045,
+                    longitudeDelta: 0.00045
                 }
             };
             setMarketRegion(region);
@@ -128,7 +128,7 @@ export default () => {
                         minHeight: 200
                         }}
                         showsUserLocation={true}
-                        onPress={(e) => setMarketRegion({ coords: { latitude: e.nativeEvent.coordinate.latitude, longitude: e.nativeEvent.coordinate.longitude, longitudeDelta: 0.00001, latitudeDelta: 0.00001}})}
+                        onPress={(e) => setMarketRegion({ coords: { latitude: e.nativeEvent.coordinate.latitude, longitude: e.nativeEvent.coordinate.longitude, longitudeDelta: 0.00045, latitudeDelta: 0.00045}})}
                         onMapLoaded={(e) => handleLocationFinder()}
                     >
                         {   

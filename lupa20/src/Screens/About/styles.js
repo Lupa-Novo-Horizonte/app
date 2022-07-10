@@ -85,5 +85,5 @@ export const PasswordLink = styled.Text`
     font-size: 13px;
     color: #00a5fe;
     text-decoration-line: underline;
-    margin-top: -10px;
+    margin-top: -20px;
 `;

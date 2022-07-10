@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { Linking, Image, View } from 'react-native';
+import { Linking, Image, View, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import  AsyncStorage from '@react-native-community/async-storage';
 import { 
@@ -20,6 +20,7 @@ import EmailIcon from '../../Assets/check.svg';
 import AlertModal from '../../Components/AlertModal';
 import SignInput from '../../Components/SignInput';
 import Api from '../../Api';
+import Global from '../sharedVariable';
 
 export default () => {
   
@@ -33,8 +34,8 @@ export default () => {
     });
   }
 
-  const CallExternal = () => {
-    Linking.openURL('http://www.tecccog.net', '_blank'); 
+  const CallExternalPolitica = () => {
+    Linking.openURL(Global.lupa_politica, '_blank'); 
   }
 
   // Save
@@ -45,7 +46,19 @@ export default () => {
         setMessage('Preencha o campo.');
     }
     else{
-        console.log('Ok: ');
+        let res = await Api.signInRecovery(emailField);
+        console.info(res);
+      if(res.error == null){
+          Alert.alert("Sucesso", "Recuperação de senha enviado ao seu e-mail.");
+          navigation.reset({
+              routes:[{ name:'SignIn'}]
+          });
+      }
+      else
+      {
+        changeModalVisible(true);
+        setMessage(`${res.error.message}`);
+      }
     }
   }
 
@@ -93,7 +106,7 @@ export default () => {
 
       </View>
       <View style={SharedStyles.viewBottom}>
-          <FooterText>Ao se registrar, você concorda com os <Link onPress={CallExternal}>Termos de Uso e a nossa Política de Privacidade</Link></FooterText>
+          <FooterText>Ao se registrar, você concorda com os <Link onPress={CallExternalPolitica}>Termos de Uso e a nossa Política de Privacidade</Link></FooterText>
       </View>
     </View>
     );

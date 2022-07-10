@@ -62,7 +62,7 @@ export default () => {
 
                 <Area>
                     <SubTitleArea>
-                      <SubTitletText>Você pode ajudar apontando os problemas nas areas indicadas abaixo:</SubTitletText>
+                      <SubTitletText>Você pode ajudar apontando os problemas nas áreas indicadas abaixo:</SubTitletText>
                     </SubTitleArea>
                 </Area>
 

@@ -18,13 +18,14 @@ import {
 
 import TopBar from '../../Components/CustomTopBar';
 import HorizontalBar from '../../Components/HorizontalBar';
+import Global from '../sharedVariable';
 
 const CallExternalSite = () => {
-  Linking.openURL('http://www.tecccog.net', '_blank'); 
+  Linking.openURL(Global.lupa_website, '_blank'); 
 }
 
 const CallExternalGitHub = () => {
-  Linking.openURL('https://github.com/Lupa-Novo-Horizonte', '_blank'); 
+  Linking.openURL(Global.lupa_github, '_blank'); 
 }
 
 export default () => {
@@ -43,38 +44,11 @@ export default () => {
             
             <Area>
               <BodyText>
-                Esse é um projeto de código aberto que pode ser encotrado no GitHub.
-                {"\n"}<ClickableArea><PasswordLink onPress={CallExternalGitHub}>github/lupanh</PasswordLink></ClickableArea>
-                {"\n"}Versão 2.0
+                Esse é um projeto de código aberto que pode ser encontrado no GitHub.
+                {"\n\n"}<ClickableArea><PasswordLink onPress={CallExternalGitHub}>github/lupanh</PasswordLink></ClickableArea>
+                {"\n"}Versão {Global.lupa_versao}
               </BodyText>
-            </Area>
-            
-            <Area>
-              <StatusTitle>Status</StatusTitle>
-            </Area>
-            
-            <Area>
-              <BulletArea>                
-                <BulletText>
-                  <Image style={{width:15, height:15}} source={require('../../Assets/check.png')} />
-                  {"\t\t"}Problema Resolvido
-                </BulletText>                
-                
-                <BulletText>
-                  <Image style={{width:15, height:15}} source={require('../../Assets/bad.png')} />
-                  {"\t\t"}Problema não Resolvido
-                </BulletText>
-
-                <BulletText>
-                  <Image style={{width:15, height:15}} source={require('../../Assets/warning.png')} />
-                  {"\t\t"}Resolução em Andamento
-                </BulletText>
-              </BulletArea>
-            </Area>
-            
-            <Area>
-              <SmallBodyText>Veja o status dos seus envios em <SmallLinkText>Perfil</SmallLinkText></SmallBodyText>
-            </Area>
+            </Area>         
             
             <HorizontalBar/>
             
@@ -84,7 +58,7 @@ export default () => {
 
             <Area>
               <ClickableArea>
-                <PasswordLink onPress={CallExternalSite}>www.tecccog.net</PasswordLink>
+                <PasswordLink onPress={CallExternalSite}>lupa.tecccog.net</PasswordLink>
               </ClickableArea>
             </Area>
             

@@ -22,6 +22,7 @@ import LockIcon from '../../Assets/lock.svg';
 import Api from '../../Api';
 import AlertModal from '../../Components/AlertModal';
 import { UserContext } from '../../Contexts/UserContext';
+import Global from '../sharedVariable';
 
 export default () => {
 
@@ -38,8 +39,8 @@ export default () => {
         });
     }
     
-    const CallExternal = () => {
-        Linking.openURL('http://www.http://www.tecccog.net/index.php/quem-somos', '_blank');
+    const CallExternalPolitica = () => {
+        Linking.openURL(Global.lupa_politica, '_blank');
     }
 
     // Save
@@ -53,6 +54,16 @@ export default () => {
         {
             changeModalVisible(true);
             setMessage('Ambos os campos de senha devem ser iguais.');
+        }
+        else if(passwordField.length < 4)
+        {
+            changeModalVisible(true);
+            setMessage('Tamanho mínimo para senha deve ser 4 dígitos.');
+        }
+        else if(emailField.length < 3 || !emailField.includes('@'))
+        {
+            changeModalVisible(true);
+            setMessage('Formato do e-mail não é válido.');
         }
         else
         {
@@ -132,7 +143,7 @@ export default () => {
 
             </View>
             <View style={SharedStyles.viewBottom}>
-                <FooterText>Ao se registrar, você concorda com os <Link onPress={CallExternal}>Termos de Uso e a nossa Política de Privacidade</Link></FooterText>
+                <FooterText>Ao se registrar, você concorda com os <Link onPress={CallExternalPolitica}>Termos de Uso e a nossa Política de Privacidade</Link></FooterText>
             </View>
         </View>
     );

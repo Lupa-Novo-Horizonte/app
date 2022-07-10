@@ -25,6 +25,7 @@ import LockIcon from '../../Assets/lock.svg';
 import Api from '../../Api';
 import { UserContext } from '../../Contexts/UserContext';
 import AlertModal from '../../Components/AlertModal';
+import Global from '../sharedVariable';
 
 export default () => {
 
@@ -46,8 +47,8 @@ export default () => {
         });
     }
 
-    const CallExternal = () => {
-        Linking.openURL('http://www.http://www.tecccog.net/index.php/quem-somos', '_blank');
+    const CallExternalPolitica = () => {
+        Linking.openURL(Global.lupa_politica, '_blank');
     }
 
     // Save
@@ -142,7 +143,7 @@ export default () => {
 
             </View>
             <View style={SharedStyles.viewBottom}>
-                <FooterText>Ao se registrar, você concorda com os <Link onPress={CallExternal}>Termos de Uso e a nossa Política de Privacidade</Link></FooterText>
+                <FooterText>Ao se registrar, você concorda com os <Link onPress={CallExternalPolitica}>Termos de Uso e a nossa Política de Privacidade</Link></FooterText>
             </View>
         </View>
     );

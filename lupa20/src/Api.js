@@ -1,4 +1,4 @@
-const BASE_API = 'http://vps39767.publiccloud.com.br/api'   //'https://10.0.2.2:58365/api';
+const BASE_API = 'http://vps39767.publiccloud.com.br/api'; //'http://vps39767.publiccloud.com.br/api'
 
 export default {
 
@@ -57,6 +57,19 @@ export default {
         let json = await response.json();
         return json;
     },
+    signInRecovery: async (username) => {        
+        let password = '-1';
+        let response = await fetch(`${BASE_API}/User/recovery`, {
+            method: 'POST',
+            headers:{
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username, password})
+        });
+        let json = await response.json();
+        return json;
+    },
 
     // Trash controller
     postTrash: async (latitude, longitude, hasRoadcleanUp, howManyTimes, hasAccumulatedTrash, token) => {
@@ -69,7 +82,6 @@ export default {
             },
             body: JSON.stringify({latitude, longitude, hasRoadcleanUp, howManyTimes, hasAccumulatedTrash})
         });
-        console.log(response);
         if(response.status == 200)
         {
             let json = await response.json();
@@ -90,7 +102,6 @@ export default {
             },
             body: JSON.stringify({latitude, longitude, hasLight, isItWorking, hasLosesCable})
         });
-        console.log(response);
         if(response.status == 200)
         {
             let json = await response.json();
@@ -111,7 +122,6 @@ export default {
             },
             body: JSON.stringify({latitude, longitude, hasWell, waterMissedInAWeek, homeWithWater })
         });
-        console.log(response);
         if(response.status == 200)
         {
             let json = await response.json();
@@ -132,7 +142,6 @@ export default {
             },
             body: JSON.stringify({latitude, longitude, hasHomeSewer, hasHomeCesspool, doesCityHallCleanTheSewer})
         });
-        console.log(response);
         if(response.status == 200)
         {
             let json = await response.json();
@@ -153,7 +162,6 @@ export default {
             },
             body: JSON.stringify({latitude, longitude, isPaved, hasHoles, hasPavedSidewalks})
         });
-        console.log(response);
         if(response.status == 200)
         {
             let json = await response.json();
@@ -174,7 +182,6 @@ export default {
             },
             body: JSON.stringify({latitude, longitude, hasCollect, howManyTimes, hasSelectiveCollect})
         });
-        console.log(response);
         if(response.status == 200)
         {
             let json = await response.json();
