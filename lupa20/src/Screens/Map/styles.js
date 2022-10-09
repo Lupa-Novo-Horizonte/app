@@ -6,37 +6,77 @@ export const Container = styled.SafeAreaView`
     background-Color: #fff;
 `;
 
-export const MapStyle = styled.View`
-    flex: 1;
-    min-height: 200px;
+export const LegendArea = styled.View `
+    flex-direction: row;
+    padding-left: 10px;
 `;
-
-export const Scroller = styled.ScrollView`
-    margin: 10px;
-`;
-
-export const Area = styled.TouchableOpacity`
-    padding: 5px;
-    margin-top: 10px;
-    align-items: center;
+export const LegendSubArea = styled.View `
     flex: 1;
     flex-direction: row;
-    justify-content: center;
 `;
 
-export const TitleText = styled.Text`
-    font-size: 15px;    
-    color: #092654;
-    margin-bottom: -10px;
+export const FloatLegend = styled.View `    
+    position: absolute;
+    width:100%;
+    bottom:0px;
+    background: rgba(255, 255, 255, 0.8);
 `;
 
-export const BodyText = styled.Text`
-    font-size: 13px;
-    color: #707070;
-    margin-top: -10px;
+// Color boxes
+
+export const LegendBoxColor01 = styled.View `
+    height: 15px;
+    width: 15px;
+    background: gold;
+    border-radius: 10px;
+    margin: 5px;
 `;
 
-export const ButtonStyle = styled.View`
-    font-size: 13px;
+export const LegendBoxColor02 = styled.View `
+    height: 15px;
+    width: 15px;
+    background: deepskyblue;
+    border-radius: 10px;
+    margin: 5px;
+`;
 
+export const LegendBoxColor03 = styled.View `
+    height: 15px;
+    width: 15px;
+    background: mediumseagreen;
+    border-radius: 10px;
+    margin: 5px;
+`;
+
+export const LegendBoxColor04 = styled.View `
+    height: 15px;
+    width: 15px;
+    background: red;
+    border-radius: 10px;
+    margin: 5px;
+`;
+
+export const LegendBoxColor05 = styled.View `
+    height: 15px;
+    width: 15px;
+    background: indigo;
+    border-radius: 10px;
+    margin: 5px;
+`;
+
+export const LegendBoxColor06 = styled.View `
+    height: 15px;
+    width: 15px;
+    background: orange;
+    border-radius: 10px;
+    margin: 5px;
+    margin-bottom: 20px;
+`;
+
+export const LegendBoxColor07 = styled.View `
+    height: 15px;
+    width: 15px;
+    background: hotpink;
+    radius: 10px;
+    margin: 5px;
 `;

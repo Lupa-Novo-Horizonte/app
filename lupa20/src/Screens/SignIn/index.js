@@ -98,8 +98,8 @@ export default () => {
                 
             <Scroller>
                 <TitleMessage>
-                    <TitleMessageText>Ajuda a melhorar o bairro</TitleMessageText>
-                    <SubTitleMessageText>Crie uma conta, é grátis! Reporte os problemas do bairro e ajuda a melhorar a sua infraestrutura</SubTitleMessageText>
+                    <TitleMessageText>Ajude a melhorar o bairro</TitleMessageText>
+                    <SubTitleMessageText>Crie uma conta, é grátis! Reporte os problemas do bairro e ajude a melhorar a sua infraestrutura</SubTitleMessageText>
                 </TitleMessage>
 
                 <InputArea>

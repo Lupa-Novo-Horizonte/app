@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import { request, PERMISSIONS} from 'react-native-permissions';
 import sharedStyles from '../sharedStyles'
+import sharedVariables from '../sharedVariable'
 import SelectDropdown from 'react-native-select-dropdown';
 import {SafeAreaView, View, Text, ScrollView, TouchableOpacity, Modal, Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -24,10 +24,11 @@ export default () => {
     const [ddl01, setDdl01] = useState();
     const [ddl02, setDdl02] = useState();
     const [ddl03, setDdl03] = useState();
+    const [ddl04, setDdl04] = useState();
     
     // Save
     const saveData = async () =>{
-        if (ddl01 == null || ddl02 == null || ddl03 == null )
+        if (ddl01 == null || ddl02 == null || ddl03 == null || ddl04 == null )
         {
             changeModalVisible(true);
             setMessage('Preencha todos os campos.');
@@ -44,7 +45,7 @@ export default () => {
             else
             {
                 let token = await AsyncStorage.getItem('token');
-                let res = await Api.postWater(markerRegion.coords.latitude.toString(), markerRegion.coords.longitude.toString(), ddl01, ddl02, ddl03, token);
+                let res = await Api.postWater(markerRegion.coords.latitude.toString(), markerRegion.coords.longitude.toString(), ddl01, ddl02, ddl03, ddl04, token);
                 
                 if(res){
                     Alert.alert("Confirmação", "Salvo com sucesso!");
@@ -77,28 +78,38 @@ export default () => {
     });
 
     const handleLocationFinder = async () => {
-        let result = await request(
-        Platform.OS === 'ios' ?
-            PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-            :
-            PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
-        );
+        let gps = await AsyncStorage.getItem('gps');
 
-        if(result == 'granted'){
-        Geolocation.getCurrentPosition((info) =>{
-            const region = {
-                coords:{
-                    latitude: info.coords.latitude,
-                    longitude: info.coords.longitude,
-                    latitudeDelta: 0.00045,
-                    longitudeDelta: 0.00045
-                }
-            };
-            setMarketRegion(region);
-        })
+        if(gps == "granted"){
+            Geolocation.getCurrentPosition((info) =>{
+                const region = {
+                    coords:{
+                        latitude: info.coords.latitude,
+                        longitude: info.coords.longitude,
+                        latitudeDelta: 0.00045,
+                        longitudeDelta: 0.00045
+                    }
+                };
+                setMarketRegion(region);
+            },
+            error => {
+                console.log(error);
+                Alert.alert("Aviso", "Ative o GPS para poder cadastrar!");
+                navigation.reset({
+                    routes:[{ name:'MainTab'}]
+                });
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 10000
+            })
         }
         else{
-            console.log('Not granted: ' + result);
+            Alert.alert("Aviso", "Ative o GPS para poder cadastrar!");
+                navigation.reset({
+                    routes:[{ name:'MainTab'}]
+            });
         }
     }
    
@@ -125,23 +136,51 @@ export default () => {
                     >
                         {   
                             markerRegion.coords != null &&    
-                            <Marker coordinate={markerRegion.coords} pinColor="red" />
+                            <Marker coordinate={markerRegion.coords} pinColor={sharedVariables.waterIconColor} />
                         }
                     </MapView>
                 </View>
                 
-                <Text style={sharedStyles.warningText}>Caso necessário, ajuste o mapa para a localização exata da ocorrência.</Text>
                 {   
                 markerRegion.coords != null &&  
-                <Text style={sharedStyles.warningText}>Latitude: {markerRegion.coords.latitude} / Longitude: {markerRegion.coords.longitude}</Text>
+                <Text style={sharedStyles.warningText}>Caso necessário, ajuste o mapa para a localização exata da ocorrência.</Text>
+                //<Text style={sharedStyles.warningText}>Latitude: {markerRegion.coords.latitude} / Longitude: {markerRegion.coords.longitude}</Text>
                 }
 
                 <Text style={sharedStyles.headerSubTitle}>Água Potável</Text>
+                
+                <View style={sharedStyles.area}>
+                    <Text style={sharedStyles.headerSubTitleSmaller}>Em relação a esta residência:</Text>
+                </View>
+
+                <View style={sharedStyles.area}>
+                    <View style={sharedStyles.subArea01}>   
+                        <View style={sharedStyles.subSubArea01}>
+                            <Text style={sharedStyles.titleText}>Possui poço amazônico?</Text>
+                        </View>
+                        <View style={sharedStyles.subSubArea02}>
+                            <HorizontalBar />
+                        </View>
+                    </View>
+                    <View style={sharedStyles.subArea02}>
+                        <SelectDropdown
+                            defaultButtonText='Selecione'
+                            key={'ddl03Key'}
+                            data={yesNo} 
+                            onSelect={(selectedItem, index) => { setDdl03((selectedItem=='Sim'? true : false))}}
+                            buttonStyle={sharedStyles.ddlButton}
+                            buttonTextStyle={sharedStyles.ddlButtonText}
+                            dropdownStyle={sharedStyles.ddlStyle}
+                            rowStyle={ sharedStyles.ddlRow}
+                            rowTextStyle={ sharedStyles.ddlRowText}
+                            />
+                    </View>
+                </View>
 
                 <View style={sharedStyles.area}>
                     <View style={sharedStyles.subArea01}>
                         <View style={sharedStyles.subSubArea01}>
-                            <Text style={sharedStyles.titleText}>Sua casa possui água encanada?</Text>
+                            <Text style={sharedStyles.titleText}>Há água encanada?</Text>
                         </View>
                         <View style={sharedStyles.subSubArea02}>
                             <HorizontalBar />
@@ -188,8 +227,8 @@ export default () => {
                
                 <View style={sharedStyles.area}>
                     <View style={sharedStyles.subArea01}>   
-                        <View style={sharedStyles.subSubArea01}>
-                            <Text style={sharedStyles.titleText}>Possui poço em sua casa?</Text>
+                        <View style={sharedStyles.subSubArea01TwoLine}>
+                            <Text style={sharedStyles.titleText}>Alguma obra de saneamento está sendo executada?</Text>
                         </View>
                         <View style={sharedStyles.subSubArea02}>
                             <HorizontalBar />
@@ -198,9 +237,9 @@ export default () => {
                     <View style={sharedStyles.subArea02}>
                         <SelectDropdown
                             defaultButtonText='Selecione'
-                            key={'ddl03Key'}
+                            key={'ddl04Key'}
                             data={yesNo} 
-                            onSelect={(selectedItem, index) => { setDdl03((selectedItem=='Sim'? true : false))}}
+                            onSelect={(selectedItem, index) => { setDdl04((selectedItem=='Sim'? true : false))}}
                             buttonStyle={sharedStyles.ddlButton}
                             buttonTextStyle={sharedStyles.ddlButtonText}
                             dropdownStyle={sharedStyles.ddlStyle}
@@ -209,12 +248,14 @@ export default () => {
                             />
                     </View>
                 </View>
-                
+
                 <View style={sharedStyles.saveArea}>
                     <TouchableOpacity style={sharedStyles.saveButton} onPress={saveData}>
                         <Text style={sharedStyles.saveButtonText}>Salvar</Text>
                     </TouchableOpacity>
                 </View>
+
+                <View style={sharedStyles.areaFree}></View>
 
             </ScrollView>
 

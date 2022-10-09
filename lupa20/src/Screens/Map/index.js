@@ -1,13 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import { Platform, View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
-import { request, PERMISSIONS} from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
-
+import sharedVariables from '../sharedVariable';
 import AsyncStorage from '@react-native-community/async-storage';
 import Api from '../../Api';
-import { Container } from './styles';
-import styled from 'styled-components';
+import { Container, LegendArea, LegendSubArea, FloatLegend, LegendBoxColor01, LegendBoxColor02, LegendBoxColor03, LegendBoxColor04, LegendBoxColor05, LegendBoxColor06, LegendBoxColor07 } from './styles';
 
 export default () => {
        
@@ -22,14 +20,9 @@ export default () => {
   
   // My location
   const handleLocationFinder = async () => {
-    let result = await request(
-      Platform.OS === 'ios' ?
-        PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-        :
-        PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
-    );
+    let gps = await AsyncStorage.getItem('gps');
 
-    if(result == 'granted'){
+    if(gps == 'granted'){
         Geolocation.getCurrentPosition((info) =>{
           const region = {
             coords:{
@@ -41,7 +34,13 @@ export default () => {
         };
         setRegion(region);
         },
-        error => console.log(error),
+        error => {
+          console.log(error);
+          Alert.alert("Aviso", "Ative o GPS para poder cadastrar!");
+          navigation.reset({
+              routes:[{ name:'MainTab'}]
+          });
+        },
         {
             enableHighAccuracy: true,
             timeout: 2000,
@@ -49,7 +48,10 @@ export default () => {
         })
     }
     else{
-      console.log('Not granted: ' + result);
+      Alert.alert("Aviso", "Ative o GPS para poder cadastrar!");
+            navigation.reset({
+                routes:[{ name:'MainTab'}]
+            });
     }
   }
 
@@ -79,18 +81,45 @@ export default () => {
         let question2 = item.description.split('|')[1];
         let question3 = item.description.split('|')[2];
         let question4 = item.description.split('|')[3];
+        let question5 = item.description.split('|')[4];
+
+        let pinColor = 'red';
+        switch (item.type){
+          case 0:
+            pinColor = sharedVariables.asphaltIconColor;
+          break;
+          case 1:
+            pinColor = sharedVariables.collectIconColor;
+          break;
+          case 2:
+            pinColor = sharedVariables.lightIconColor;
+          break;
+          case 3:
+            pinColor = sharedVariables.publicServiceIconColor;
+          break;
+          case 4:
+            pinColor = sharedVariables.sewerIconColor;
+          break;
+          case 5:
+            pinColor = sharedVariables.trashIconColor;
+          break;
+          case 6:
+            pinColor = sharedVariables.waterIconColor;
+          break;
+        }
 
         return(
           <Marker
             key={index}
-            coordinate={{ latitude: item.latitude, longitude: item.longitude }}>
+            coordinate={{ latitude: item.latitude, longitude: item.longitude }} pinColor={pinColor}>
               <Callout>
-              <View style={{height: 120, width: 210}}>
+              <View style={{height: 160, width: 240}}>
                 <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
-                <Text>- {question1}</Text>
-                <Text>- {question2}</Text>
-                <Text>- {question3}</Text>
-                <Text>- {question4}</Text>
+                <Text>{question1}</Text>
+                <Text>{question2}</Text>
+                <Text>{question3}</Text>
+                <Text>{question4}</Text>
+                <Text>{question5}</Text>
               </View>
               </Callout>
             </Marker>
@@ -115,7 +144,7 @@ export default () => {
         showsScale={true}
         style={{
           flex: 1,
-          minHeight: 200
+          minHeight: 250
         }}
         showsUserLocation={true}
         onMapLoaded={(e) => handleLocationFinder()}
@@ -124,6 +153,42 @@ export default () => {
          renderMarkers
       }
       </MapView>
+      
+      <FloatLegend>
+        <LegendArea>
+          <LegendSubArea>
+            <LegendBoxColor01/>
+            <Text>Iluminação Pública</Text>
+          </LegendSubArea>
+          <LegendSubArea>
+            <LegendBoxColor02/>
+            <Text>Água Portável</Text>
+          </LegendSubArea>
+        </LegendArea>
+        
+        <LegendArea>
+          <LegendSubArea>
+            <LegendBoxColor03/>
+            <Text>Limpeza Urbana</Text>
+          </LegendSubArea>
+          <LegendSubArea>
+            <LegendBoxColor04/>
+            <Text>Tratamento de Esgoto</Text>
+          </LegendSubArea>
+        </LegendArea>
+        
+        <LegendArea>
+          <LegendSubArea>
+            <LegendBoxColor05/>
+            <Text>Calçadas e Asfalto</Text>
+          </LegendSubArea>
+          <LegendSubArea>
+            <LegendBoxColor06/>
+            <Text>Coleta de Lixo</Text>
+          </LegendSubArea>
+        </LegendArea>
+      </FloatLegend>
+
     </Container>
   );
 }

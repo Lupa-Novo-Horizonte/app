@@ -1,4 +1,4 @@
-const BASE_API = 'http://vps39767.publiccloud.com.br/api'; //'http://vps39767.publiccloud.com.br/api'
+const BASE_API = 'https://21fb-2804-14d-32b3-4857-b9ee-e5ef-d4a1-2f4d.sa.ngrok.io/api'; //'http://vps39767.publiccloud.com.br/api'
 
 export default {
 
@@ -72,7 +72,7 @@ export default {
     },
 
     // Trash controller
-    postTrash: async (latitude, longitude, hasRoadcleanUp, howManyTimes, hasAccumulatedTrash, token) => {
+    postTrash: async (latitude, longitude, hasRoadcleanUp, howManyTimes, hasAccumulatedTrash, hasLandWeeding, token) => {
         let response = await fetch(`${BASE_API}/Trash`, {
             method: 'POST',
             headers:{
@@ -80,7 +80,7 @@ export default {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({latitude, longitude, hasRoadcleanUp, howManyTimes, hasAccumulatedTrash})
+            body: JSON.stringify({latitude, longitude, hasRoadcleanUp, howManyTimes, hasAccumulatedTrash, hasLandWeeding})
         });
         if(response.status == 200)
         {
@@ -112,7 +112,7 @@ export default {
     },
 
     // Water controller
-    postWater: async (latitude, longitude, hasWell, waterMissedInAWeek, homeWithWater, token) => {
+    postWater: async (latitude, longitude, hasWell, waterMissedInAWeek, homeWithWater, hasSanitationProject, token) => {
         let response = await fetch(`${BASE_API}/Water`, {
             method: 'POST',
             headers:{
@@ -120,7 +120,7 @@ export default {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({latitude, longitude, hasWell, waterMissedInAWeek, homeWithWater })
+            body: JSON.stringify({latitude, longitude, hasWell, waterMissedInAWeek, homeWithWater, hasSanitationProject })
         });
         if(response.status == 200)
         {
@@ -132,7 +132,7 @@ export default {
     },
 
     // Sewer controller
-    postSewer: async (latitude, longitude, hasHomeSewer, hasHomeCesspool, doesCityHallCleanTheSewer, token) => {
+    postSewer: async (latitude, longitude, hasHomeSewer, hasHomeCesspool, hasSanitationProject, token) => {
         let response = await fetch(`${BASE_API}/Sewer`, {
             method: 'POST',
             headers:{
@@ -140,7 +140,7 @@ export default {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({latitude, longitude, hasHomeSewer, hasHomeCesspool, doesCityHallCleanTheSewer})
+            body: JSON.stringify({latitude, longitude, hasHomeSewer, hasHomeCesspool, hasSanitationProject})
         });
         if(response.status == 200)
         {
@@ -172,7 +172,7 @@ export default {
     },
 
     // Collect controller
-    postCollect: async (latitude, longitude, hasCollect, howManyTimes, hasSelectiveCollect, token) => {
+    postCollect: async (latitude, longitude, hasCollect, howManyTimes, token) => {
         let response = await fetch(`${BASE_API}/Collect`, {
             method: 'POST',
             headers:{
@@ -180,7 +180,7 @@ export default {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({latitude, longitude, hasCollect, howManyTimes, hasSelectiveCollect})
+            body: JSON.stringify({latitude, longitude, hasCollect, howManyTimes})
         });
         if(response.status == 200)
         {

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import { request, PERMISSIONS} from 'react-native-permissions';
 
 import {
     Container,
@@ -49,6 +51,26 @@ export default () => {
             routes:[{ name:'Light'}]
         });
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            let result = await request(
+                Platform.OS === 'ios' ?
+                    PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+                    :
+                    PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
+            );
+            if(result == 'granted'){
+                console.log('GPS permission granted');
+                await AsyncStorage.setItem('gps', 'granted');
+            }
+            else{
+                console.log('GPS permission denied');
+                await AsyncStorage.setItem('gps', 'denied');
+            }
+        }
+        fetchData();
+    }, [])
 
     return (
         <Container>

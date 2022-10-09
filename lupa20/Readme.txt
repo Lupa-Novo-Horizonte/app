@@ -21,6 +21,7 @@ https://github.com/Lupa-Novo-Horizonte/app
 5. npm install react-native-eject
 6. npm i --save-dev @react-native-community/cli
 7. adb devices
+8. adb -s 1201160510A229B reverse tcp:58365 tcp:58365
 	
 ::Install libraries in order to load the app correctly
 1. npm install react-native-geolocation-service

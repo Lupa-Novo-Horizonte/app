@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import { request, PERMISSIONS} from 'react-native-permissions';
 import sharedStyles from '../sharedStyles'
+import sharedVariables from '../sharedVariable'
 import SelectDropdown from 'react-native-select-dropdown';
 import {SafeAreaView, View, Text, ScrollView, TouchableOpacity, Modal, Alert, Dimensions} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -69,23 +69,16 @@ export default () => {
     }
 
     // Map config    
-    const navigation = useNavigation();
-    const longitudeDelta = 0.00045 * (Dimensions.get('window').width / Dimensions.get('window').height)
-    
+    const navigation = useNavigation();   
 
     const [markerRegion, setMarketRegion] = useState({
         coords:null
     });
 
     const handleLocationFinder = async () => {
-        let result = await request(
-        Platform.OS === 'ios' ?
-            PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-            :
-            PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
-        );
+        let gps = await AsyncStorage.getItem('gps');
 
-        if(result == 'granted'){
+        if(gps == 'granted'){
             Geolocation.getCurrentPosition((info) =>{
             const region = {
                 coords:{
@@ -97,15 +90,24 @@ export default () => {
             };
             setMarketRegion(region);
             },
-            error => console.log(error),
+            error => {
+                console.log(error);
+                Alert.alert("Aviso", "Ative o GPS para poder cadastrar!");
+                navigation.reset({
+                    routes:[{ name:'MainTab'}]
+                });
+            },
             {
                 enableHighAccuracy: true,
-                timeout: 2000,
-                maximumAge: 3600000
+                timeout: 15000,
+                maximumAge: 10000
             })
         }
         else{
-            console.log('Not granted: ' + result);
+            Alert.alert("Aviso", "Ative o GPS para poder cadastrar!");
+            navigation.reset({
+                routes:[{ name:'MainTab'}]
+            });
         }
     }
    
@@ -132,23 +134,27 @@ export default () => {
                     >
                         {   
                             markerRegion.coords != null &&    
-                            <Marker coordinate={markerRegion.coords} pinColor="red" />
+                            <Marker coordinate={markerRegion.coords} pinColor={sharedVariables.sewerIconColor} />
                         }
                     </MapView>
                 </View>
-                
-                <Text style={sharedStyles.warningText}>Caso necessário, ajuste o mapa para a localização exata da ocorrência.</Text>
+                                
                 {   
                 markerRegion.coords != null &&  
-                <Text style={sharedStyles.warningText}>Latitude: {markerRegion.coords.latitude} / Longitude: {markerRegion.coords.longitude}</Text>
+                //<Text style={sharedStyles.warningText}>Latitude: {markerRegion.coords.latitude} / Longitude: {markerRegion.coords.longitude}</Text>
+                <Text style={sharedStyles.warningText}>Caso necessário, ajuste o mapa para a localização exata da ocorrência.</Text>
                 }
 
                 <Text style={sharedStyles.headerSubTitle}>Tratamento de Esgoto</Text>
 
                 <View style={sharedStyles.area}>
+                    <Text style={sharedStyles.headerSubTitleSmaller}>Em relação a esta residência:</Text>
+                </View>
+
+                <View style={sharedStyles.area}>
                     <View style={sharedStyles.subArea01}>
                         <View style={sharedStyles.subSubArea01}>
-                            <Text style={sharedStyles.titleText}>Sua casa possui coleta de esgoto?</Text>
+                            <Text style={sharedStyles.titleText}>Há coleta ou tratamento de esgoto?</Text>
                         </View>
                         <View style={sharedStyles.subSubArea02}>
                             <HorizontalBar />
@@ -172,7 +178,7 @@ export default () => {
                 <View style={sharedStyles.area}>
                     <View style={sharedStyles.subArea01}>
                         <View style={sharedStyles.subSubArea01}>
-                            <Text style={sharedStyles.titleText}>Sua casa possui fossa?</Text>
+                            <Text style={sharedStyles.titleText}>Possui fossa?</Text>
                         </View>
                         <View style={sharedStyles.subSubArea02}>
                             <HorizontalBar />
@@ -195,8 +201,8 @@ export default () => {
                
                 <View style={sharedStyles.area}>
                     <View style={sharedStyles.subArea01}>   
-                        <View style={sharedStyles.subSubArea01}>
-                            <Text style={sharedStyles.titleText}>A prefeitura limpa os esgotos?</Text>
+                        <View style={sharedStyles.subSubArea01TwoLine}>
+                            <Text style={sharedStyles.titleText}>Alguma obra de saneamento está sendo executada?</Text>
                         </View>
                         <View style={sharedStyles.subSubArea02}>
                             <HorizontalBar />

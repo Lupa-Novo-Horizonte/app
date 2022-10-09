@@ -84,6 +84,13 @@ titleText: {
     marginBottom: -10
 },
 
+areaFree:{
+  flexDirection: 'row',
+  marginLeft:5,
+  marginRight:5,
+  height:50
+},
+
 area:{
     flexDirection: 'row',
     marginLeft:5,
@@ -105,6 +112,12 @@ subArea01:{
 subSubArea01:{
     flex:9,
     justifyContent: 'flex-start'
+},
+
+subSubArea01TwoLine:{
+  flex:9,
+  height: 30,
+  justifyContent: 'flex-start'
 },
 
 subSubArea02:{
@@ -137,6 +150,13 @@ headerSubTitle:{
     fontWeight: 'bold',
     color: '#092654',
     textAlign: 'center'
+},
+
+headerSubTitleSmaller:{
+  fontSize: 16,
+  fontWeight: 'bold',
+  color: '#092654',
+  textAlign: 'center'
 },
 
 warningText:{
