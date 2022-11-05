@@ -84,6 +84,13 @@ titleText: {
     marginBottom: -10
 },
 
+captureText: {
+  fontSize: 13,   
+  color: '#092654',
+  marginTop: 10,
+  marginBottom:25
+},
+
 areaFree:{
   flexDirection: 'row',
   marginLeft:5,
@@ -96,6 +103,14 @@ area:{
     marginLeft:5,
     marginRight:5,
     marginBottom:20
+},
+
+areaRadio:{
+  flexDirection: 'row',
+  marginLeft:5,
+  marginRight:5,
+  marginTop:-15,
+  marginBottom:20
 },
 
 subArea02:{
@@ -116,7 +131,7 @@ subSubArea01:{
 
 subSubArea01TwoLine:{
   flex:9,
-  height: 30,
+  height: 35,
   justifyContent: 'flex-start'
 },
 
@@ -142,6 +157,15 @@ saveButtonText:{
     color: '#fff',
     fontSize: 15,
     fontWeight: 'bold'
+},
+
+captureButton:{
+  height: 100,
+  backgroundColor: '#00a5fe',
+  borderRadius: 100,
+  width:100,
+  justifyContent: 'center',
+  alignItems: 'center'
 },
 
 headerSubTitle:{

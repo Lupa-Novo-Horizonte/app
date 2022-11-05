@@ -1,4 +1,4 @@
-const BASE_API = 'https://21fb-2804-14d-32b3-4857-b9ee-e5ef-d4a1-2f4d.sa.ngrok.io/api'; //'http://vps39767.publiccloud.com.br/api'
+const BASE_API = 'http://vps39767.publiccloud.com.br/api'; //'http://vps39767.publiccloud.com.br/api'
 
 export default {
 
@@ -92,7 +92,7 @@ export default {
     },
 
     // Light controller
-    postLight: async (latitude, longitude, hasLight, isItWorking, hasLosesCable, token) => {
+    postLight: async (latitude, longitude, path, hasLight, isItWorking, hasLosesCable, token) => {
         let response = await fetch(`${BASE_API}/Light`, {
             method: 'POST',
             headers:{
@@ -100,7 +100,7 @@ export default {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({latitude, longitude, hasLight, isItWorking, hasLosesCable})
+            body: JSON.stringify({latitude, longitude, path, hasLight, isItWorking, hasLosesCable})
         });
         if(response.status == 200)
         {
@@ -152,7 +152,7 @@ export default {
     },
 
     // Asphalt controller
-    postAsphalt: async (latitude, longitude, isPaved, hasHoles, hasPavedSidewalks, token) => {
+    postAsphalt: async (latitude, longitude, path, isPaved, hasHoles, hasPavedSidewalks, token) => {
         let response = await fetch(`${BASE_API}/Asphalt`, {
             method: 'POST',
             headers:{
@@ -160,7 +160,7 @@ export default {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({latitude, longitude, isPaved, hasHoles, hasPavedSidewalks})
+            body: JSON.stringify({latitude, longitude, path, isPaved, hasHoles, hasPavedSidewalks})
         });
         if(response.status == 200)
         {

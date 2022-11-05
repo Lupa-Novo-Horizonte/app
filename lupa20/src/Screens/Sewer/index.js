@@ -6,7 +6,7 @@ import {SafeAreaView, View, Text, ScrollView, TouchableOpacity, Modal, Alert, Di
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
-import Geolocation from '@react-native-community/geolocation';
+import Geolocation from 'react-native-geolocation-service';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 import TopBar from '../../Components/CustomTopBarWithBack';
@@ -84,8 +84,8 @@ export default () => {
                 coords:{
                     latitude: info.coords.latitude,
                     longitude: info.coords.longitude,
-                    latitudeDelta: 0.00045,
-                    longitudeDelta: 0.00045
+                    latitudeDelta: sharedVariables.zoom,
+                    longitudeDelta: sharedVariables.zoom
                 }
             };
             setMarketRegion(region);
@@ -129,8 +129,9 @@ export default () => {
                             minHeight: 200
                         }}
                         showsUserLocation={true}
-                        onPress={(e) => setMarketRegion({ coords: { latitude: e.nativeEvent.coordinate.latitude, longitude: e.nativeEvent.coordinate.longitude, longitudeDelta: 0.00045, latitudeDelta: 0.00045}})}
+                        onPress={(e) => setMarketRegion({ coords: { latitude: e.nativeEvent.coordinate.latitude, longitude: e.nativeEvent.coordinate.longitude, longitudeDelta: sharedVariables.zoom, latitudeDelta: sharedVariables.zoom}})}
                         onMapLoaded={(e) => handleLocationFinder()}
+                        zoomEnabled={false}
                     >
                         {   
                             markerRegion.coords != null &&    
