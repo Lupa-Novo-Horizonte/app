@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
  
 ddlButton:{
   backgroundColor: '#fff',
-  width:100,
+  width:90,
   borderRadius:5,
   borderColor: '#707070',
   borderWidth:1, 
@@ -44,13 +44,13 @@ ddlButton:{
 
 // Forms
 ddlButtonText:{
-  fontSize: 13,
+  fontSize: 12,
   color: '#707070'
 },
 
 ddlStyle:{
   backgroundColor: '#fff',
-  width:100,
+  width:90,
   borderRadius:5,
   borderColor: '#707070',
   borderWidth:1
@@ -60,11 +60,11 @@ ddlRow:{
   backgroundColor: '#fff',
   borderBottomColor: '#707070',
   height: 30,
-  width:100
+  width:90
 },
 
 ddlRowText:{
-  fontSize: 13,
+  fontSize: 12,
   color: '#707070'
 },
 
@@ -114,12 +114,12 @@ areaRadio:{
 },
 
 subArea02:{
-    flex: 3,
+    flex: 2.5,
     alignItems: 'flex-end'
 },
 
 subArea01:{
-    flex: 6,
+    flex: 6.5,
     justifyContent: 'center',
     flexDirection: 'column'
 },
@@ -131,8 +131,8 @@ subSubArea01:{
 
 subSubArea01TwoLine:{
   flex:9,
-  height: 35,
-  justifyContent: 'flex-start'
+  minHeight: 40,
+  justifyContent: 'flex-start',
 },
 
 subSubArea02:{

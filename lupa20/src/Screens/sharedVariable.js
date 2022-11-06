@@ -4,7 +4,7 @@ const lupa_politica='http://lupa.tecccog.net/politica-de-privacidade';
 const lupa_versao='2.0.2';
 const lupa_instagram='https://www.instagram.com/projetolupanh';
 const lupa_facebook='https://www.facebook.com/projetolupanh';
-const lupa_linkedin='https://www.linkedin.com/in/projetolupa-nh-70826b240';
+const lupa_linkedin='https://www.linkedin.com/in/projeto-lupa-nh-70826b240';
 const lupa_twitter='https://twitter.com/projetolupanh';
 const lupa_youtube='https://www.youtube.com/channel/UCsJzR_BzrP6TkmHjVeH0xcA';
 

@@ -1335,6 +1335,13 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/masked-view/-/masked-view-0.1.11.tgz"
   "version" "0.1.11"
 
+"@react-native-maps/polyline-direction@^1.0.0":
+  "integrity" "sha512-XlnegW6BBHHfWOOkr3SxYqqqM7gtyNkX6ICJA9q0a3FKZI4r9n2DhfQxm96Je/xTy+Nn5Xwyh+YW6U5CjJDDAw=="
+  "resolved" "https://registry.npmjs.org/@react-native-maps/polyline-direction/-/polyline-direction-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "@react-native/assets@1.0.0":
   "integrity" "sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ=="
   "resolved" "https://registry.npmjs.org/@react-native/assets/-/assets-1.0.0.tgz"

@@ -129,7 +129,7 @@ export default () => {
                 console.log(error);
             },
             { 
-                enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 
+                enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10
             },
         );
         return watchId;
@@ -369,6 +369,8 @@ export default () => {
                     </TouchableOpacity>
                 </View>
                 
+                <View style={sharedStyles.areaFree}></View>
+
             </ScrollView>
 
             <Modal 

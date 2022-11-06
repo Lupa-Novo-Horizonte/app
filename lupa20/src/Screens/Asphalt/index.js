@@ -75,7 +75,7 @@ export default () => {
     // Capture
     const [capturePoint, setCapturePoint] = useState({
         routeCoordinates: [],
-        prevLatLng: {"latitude": 37.4220936, "longitude": -122.083922} // comment content. Leave only {}
+        prevLatLng: {} // comment content. Leave only {"latitude": 37.4220936, "longitude": -122.083922}
     });
     const [watchId, setWatchId] = useState();
     const [captureStatus01, setCaptureStatus01] = useState();
@@ -122,14 +122,13 @@ export default () => {
                       }))
 
                       setMarketRegion({ coords: { latitude: newCoordinate.latitude, longitude: newCoordinate.longitude, longitudeDelta: sharedVariables.zoom, latitudeDelta: sharedVariables.zoom}})
-                      mapRef.current.animateToRegion({ latitude: newCoordinate.latitude, longitude: newCoordinate.longitude, longitudeDelta: sharedVariables.zoom, latitudeDelta: sharedVariables.zoom})
                 }
             },
             error => {
                 console.log(error);
             },
             { 
-                enableHighAccuracy: true, timeout: 60000, maximumAge: 10000 
+                enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 
             },
         );
         return watchId;
@@ -215,7 +214,6 @@ export default () => {
                 
                 <View style={sharedStyles.area}>
                     <MapView
-                        ref={mapRef}
                         provider={PROVIDER_GOOGLE}
                         showsMyLocationButton={true}
                         loadingEnabled={true}
