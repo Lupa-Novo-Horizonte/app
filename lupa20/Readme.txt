@@ -43,7 +43,8 @@ https://github.com/Lupa-Novo-Horizonte/app
 17. npm install @react-navigation/native
 18. npm install react-native-select-dropdown
 19. npm install react-native-math --legacy-peer-deps
-
+20. npm install react-native-simple-radio-button --legacy-peer-deps
+21. npm install react-native-geolocation-service --legacy-peer-deps
 *In case needed use "--legacy-peer-deps" at the end of each command for compactibility reason.
 
 ::In case run using emulator
@@ -64,5 +65,7 @@ open the port for remote connection using: ngrok http https://localhost:58365
 # Generate APK for android
 1. react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
 2. cd android
-3. ./gradlew bundleRelease
-APK in "yourProject/android/app/build/outputs/apk/debug/app-debug.apk"
+3. Update version inside Android/build.gradle. Fields versionCode xxx / versionName "x.x.x"
+4.1 Generate APK (install direct on mobile): ./gradlew assembleRelease 
+4.2 OR generate .AAB (google play store): ./gradlew bundleRelease
+Files in: "yourProject/android/app/build/outputs/apk/release/app-release.apk" OR "yourProject/android/app/build/outputs/bundle/release/app-release.aab"

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, Image } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
-import Geolocation from '@react-native-community/geolocation';
+import MapView, { PROVIDER_GOOGLE, Marker, Callout, Polyline} from 'react-native-maps';
+import Geolocation from 'react-native-geolocation-service';
 import sharedVariables from '../sharedVariable';
 import AsyncStorage from '@react-native-community/async-storage';
 import Api from '../../Api';
@@ -9,6 +9,9 @@ import { Container, LegendArea, LegendSubArea, FloatLegend, LegendBoxColor01, Le
 
 export default () => {
        
+  // Modal
+  const [isModalVisible, setisModalVisible] = useState(false);
+  const [message, setMessage] = useState('Empty');
   const changeModalVisible = (bool) => {
       setisModalVisible(bool);
   }
@@ -28,8 +31,8 @@ export default () => {
             coords:{
                 latitude: info.coords.latitude,
                 longitude: info.coords.longitude,
-                latitudeDelta: 0.001,
-                longitudeDelta: 0.001
+                latitudeDelta: sharedVariables.zoom,
+                longitudeDelta: sharedVariables.zoom
             }
         };
         setRegion(region);
@@ -76,7 +79,6 @@ export default () => {
   }, [])
 
   var renderMarkers = markers.map((item, index) => { 
-
         let question1 = item.description.split('|')[0];
         let question2 = item.description.split('|')[1];
         let question3 = item.description.split('|')[2];
@@ -108,22 +110,31 @@ export default () => {
           break;
         }
 
-        return(
-          <Marker
-            key={index}
-            coordinate={{ latitude: item.latitude, longitude: item.longitude }} pinColor={pinColor}>
-              <Callout>
-              <View style={{height: 160, width: 240}}>
-                <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
-                <Text>{question1}</Text>
-                <Text>{question2}</Text>
-                <Text>{question3}</Text>
-                <Text>{question4}</Text>
-                <Text>{question5}</Text>
-              </View>
-              </Callout>
-            </Marker>
-        )
+        if(item.path == null)
+        {
+          return(
+            <Marker
+              key={index}
+              coordinate={{ latitude: item.latitude, longitude: item.longitude }} pinColor={pinColor}>
+                <Callout>
+                <View style={{height: 150, width: 240}}>
+                  <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
+                  <Text>{question1}</Text>
+                  <Text>{question2}</Text>
+                  <Text>{question3}</Text>
+                  <Text>{question4}</Text>
+                  <Text>{question5}</Text>
+                </View>
+                </Callout>
+              </Marker>
+          )
+        }
+        else
+        {
+          return(
+            <Polyline key={index} coordinates={JSON.parse(item.path)} strokeWidth={4} strokeColor={pinColor} />
+          )
+        }
     });
   
     

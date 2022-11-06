@@ -6,12 +6,7 @@ import {
     Scroller,
     Area,
     BodyText,
-    SmallBodyText,
-    StatusTitle,
-    BulletArea,
-    BulletText,
     MoreInfoText,
-    SmallLinkText,
     ClickableArea,
     PasswordLink
  } from './styles';
@@ -26,6 +21,26 @@ const CallExternalSite = () => {
 
 const CallExternalGitHub = () => {
   Linking.openURL(Global.lupa_github, '_blank'); 
+}
+
+const CallExternalTwitter = () => {
+  Linking.openURL(Global.lupa_twitter, '_blank')
+}
+
+const CallExternalFacebook = () => {
+  Linking.openURL(Global.lupa_facebook, '_blank')
+}
+
+const CallExternalInstagram = () => {
+  Linking.openURL(Global.lupa_instagram, '_blank')
+}
+
+const CallExternalLinkedin = () => {
+  Linking.openURL(Global.lupa_linkedin, '_blank')
+}
+
+const CallExternalYoutube = () => {
+  Linking.openURL(Global.lupa_youtube, '_blank')
 }
 
 export default () => {
@@ -61,8 +76,31 @@ export default () => {
                 <PasswordLink onPress={CallExternalSite}>lupa.tecccog.net</PasswordLink>
               </ClickableArea>
             </Area>
+                        
+            <Area>
+              <ClickableArea onPress={CallExternalFacebook}>
+                <Image style={{width:30, height:30}} source={require('../../Assets/facebook.png')} />
+              </ClickableArea>
+              <Text>{"\t"}</Text>
+              <ClickableArea onPress={CallExternalTwitter} >
+                <Image style={{width:30, height:30}} source={require('../../Assets/twitter.png')} />
+              </ClickableArea>
+              <Text>{"\t"}</Text>
+              <ClickableArea onPress={CallExternalInstagram}>
+                <Image style={{width:30, height:30}} source={require('../../Assets/instagram.png')} />
+              </ClickableArea>
+              <Text>{"\t"}</Text>
+              <ClickableArea onPress={CallExternalLinkedin}>
+                <Image style={{width:30, height:30}} source={require('../../Assets/linkedin.png')} />
+              </ClickableArea>
+              <Text>{"\t"}</Text>
+              <ClickableArea onPress={CallExternalYoutube}>
+                <Image style={{width:30, height:30}} source={require('../../Assets/youtube.png')} />
+              </ClickableArea>
+            </Area>
             
             <Text>{"\n"}</Text>
+
           </Scroller>
         </Container>
     );
