@@ -84,6 +84,15 @@ titleText: {
     marginBottom: -10
 },
 
+radioFormText: {
+  fontSize: 13,   
+  color: '#707070',
+  marginBottom: 5,
+  marginLeft: 20,
+  marginRight: 20
+},
+
+
 captureText: {
   fontSize: 13,   
   color: '#092654',

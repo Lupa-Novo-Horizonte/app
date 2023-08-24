@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import sharedStyles from '../sharedStyles'
 import sharedVariables from '../sharedVariable'
 import SelectDropdown from 'react-native-select-dropdown';
-import {SafeAreaView, View, Text, ScrollView, TouchableOpacity, Modal, Alert, Dimensions} from 'react-native';
+import {SafeAreaView, View, Text, ScrollView, TouchableOpacity, Modal, Alert, Image} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
@@ -135,7 +135,9 @@ export default () => {
                     >
                         {   
                             markerRegion.coords != null &&    
-                            <Marker coordinate={markerRegion.coords} pinColor={sharedVariables.sewerIconColor} />
+                            <Marker coordinate={markerRegion.coords}>
+                                <Image source={sharedVariables.sewerIconColor} style={{height: 80, width: 49}}></Image>
+                            </Marker>
                         }
                     </MapView>
                 </View>

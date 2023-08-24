@@ -85,45 +85,73 @@ export default () => {
         let question4 = item.description.split('|')[3];
         let question5 = item.description.split('|')[4];
 
-        let pinColor = 'red';
+        let iconColor = '';
+        let polylineColor = '';
+
+        if(item.isProblem)
+          polylineColor = sharedVariables.polylineColorBad;
+        else
+          polylineColor = sharedVariables.polylineColorGood;
+
         switch (item.type){
           case 0:
-            pinColor = sharedVariables.asphaltIconColor;
+            if(item.isProblem)
+              iconColor = sharedVariables.asphaltIconBad;
+            else
+              iconColor = sharedVariables.asphaltIconColor;
           break;
           case 1:
-            pinColor = sharedVariables.collectIconColor;
+            if(item.isProblem)
+              iconColor = sharedVariables.collectIconBad;
+            else
+              iconColor = sharedVariables.collectIconColor;
           break;
           case 2:
-            pinColor = sharedVariables.lightIconColor;
+            if(item.isProblem)
+              iconColor = sharedVariables.lightIconBad;
+            else
+              iconColor = sharedVariables.lightIconColor;
           break;
           case 3:
-            pinColor = sharedVariables.publicServiceIconColor;
+            iconColor = sharedVariables.publicServiceIconColor;
           break;
           case 4:
-            pinColor = sharedVariables.sewerIconColor;
+            if(item.isProblem)
+              iconColor = sharedVariables.sewerIconBad;
+            else
+              iconColor = sharedVariables.sewerIconColor;
           break;
           case 5:
-            pinColor = sharedVariables.trashIconColor;
+            if(item.isProblem)
+              iconColor = sharedVariables.trashIconBad;
+            else
+              iconColor = sharedVariables.trashIconColor;
           break;
           case 6:
-            pinColor = sharedVariables.waterIconColor;
+            if(item.isProblem)
+              iconColor = sharedVariables.waterIconBad;
+            else
+              iconColor = sharedVariables.waterIconColor;
           break;
         }
+       
 
         if(item.path == null)
         {
           return(
             <Marker
               key={index}
-              coordinate={{ latitude: item.latitude, longitude: item.longitude }} pinColor={pinColor}>
+              coordinate={{ latitude: item.latitude, longitude: item.longitude }} >
+                <Image source={iconColor} style={{height: 80, width: 49}}></Image>
                 <Callout>
-                <View style={{height: 150, width: 240}}>
+                <View style={{height: 150, width: 280}}>
                   <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
                   <Text>{question1}</Text>
                   <Text>{question2}</Text>
                   <Text>{question3}</Text>
                   <Text>{question4}</Text>
                   <Text>{question5}</Text>
+                  <Text style={{fontWeight: '300', textAlign: 'right'}}>Id: {item.type}{item.id}</Text>
                 </View>
                 </Callout>
               </Marker>
@@ -132,7 +160,7 @@ export default () => {
         else
         {
           return(
-            <Polyline key={index} coordinates={JSON.parse(item.path)} strokeWidth={4} strokeColor={pinColor} />
+            <Polyline key={index} coordinates={JSON.parse(item.path)} strokeWidth={4} strokeColor={polylineColor} />
           )
         }
     });
@@ -165,6 +193,7 @@ export default () => {
       }
       </MapView>
       
+      {/* 
       <FloatLegend>
         <LegendArea>
           <LegendSubArea>
@@ -198,7 +227,7 @@ export default () => {
             <Text>Coleta de Lixo</Text>
           </LegendSubArea>
         </LegendArea>
-      </FloatLegend>
+      </FloatLegend> */}
 
     </Container>
   );

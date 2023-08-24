@@ -3,7 +3,7 @@ import sharedStyles from '../sharedStyles'
 import sharedVariables from '../sharedVariable'
 import SelectDropdown from 'react-native-select-dropdown';
 import RadioForm from 'react-native-simple-radio-button';
-import {SafeAreaView, View, Text, ScrollView, TouchableOpacity, Modal, Alert} from 'react-native';
+import {SafeAreaView, View, Text, ScrollView, TouchableOpacity, Modal, Alert, Image} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
@@ -31,7 +31,7 @@ export default () => {
 
     // Save
     const saveData = async () =>{
-        if ((ddl01 == null || ddl02 == null || ddl03 == null) && ddl04 == 0 )
+        if (ddl01 == null || ddl02 == null || ddl03 == null)
         {
             changeModalVisible(true);
             setMessage('Preencha todos os campos.');
@@ -234,11 +234,13 @@ export default () => {
                     >
                         {   
                            (markerRegion.coords != null) &&    
-                           <Marker coordinate={markerRegion.coords} pinColor={sharedVariables.asphaltIconColor} />
+                           <Marker coordinate={markerRegion.coords}>
+                                <Image source={sharedVariables.asphaltIconColor} style={{height: 80, width: 49}}></Image>
+                           </Marker>
                         }                        
                         {
                             (ddl04 == 1) &&
-                            <Polyline coordinates={capturePoint.routeCoordinates} strokeWidth={4} strokeColor={sharedVariables.asphaltIconColor} />
+                            <Polyline coordinates={capturePoint.routeCoordinates} strokeWidth={4} strokeColor={sharedVariables.polylineColorGood} />
                         }                        
                         
                     </MapView>
@@ -275,7 +277,7 @@ export default () => {
                             <HorizontalBar />
                 </View>
 
-                { ddl04 == 0 &&
+                {/* { ddl04 == 0 && */}
 
                 <View>
                     <View style={sharedStyles.area}>
@@ -350,7 +352,7 @@ export default () => {
                         </View>
                     </View>
                 </View>
-                }
+                {/* } */}
 
                 {ddl04 == 1 &&
                     <View style={sharedStyles.saveArea}>

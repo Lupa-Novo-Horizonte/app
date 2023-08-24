@@ -1,4 +1,4 @@
-const BASE_API = 'http://vps39767.publiccloud.com.br/api'; //'http://vps39767.publiccloud.com.br/api'
+const BASE_API = 'https://vps39767.publiccloud.com.br/api'; //'http://vps39767.publiccloud.com.br/api'
 
 export default {
 
@@ -194,6 +194,24 @@ export default {
     // Map
     getMap: async (token) => {
         let response = await fetch(`${BASE_API}/Map`, {
+            method: 'GET',
+            headers:{
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if(response.status == 200)
+        {
+            let json = await response.json();
+            return json;
+        }
+        else
+            return null;
+    },
+
+    getReport: async (token, id) => {
+        let response = await fetch(`${BASE_API}/Map/report?userId=${id}`, {
             method: 'GET',
             headers:{
                 Accept: 'application/json',

@@ -1,7 +1,9 @@
-import React, { useState, useContext } from 'react';
-import { View, Image, Linking } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, Linking, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import  AsyncStorage from '@react-native-community/async-storage';
+import RadioForm from 'react-native-simple-radio-button';
+
 import { 
     Scroller,
     InputArea,
@@ -12,7 +14,8 @@ import {
     SignMessageButtonText,
     SignMessageButtonTextBold,
     Link,
-    Modal
+    Modal,
+    TextMessage
  } from "./styles";
 
 import SharedStyles from '../../Screens/sharedStyles';
@@ -21,12 +24,10 @@ import EmailIcon from '../../Assets/check.svg';
 import LockIcon from '../../Assets/lock.svg';
 import Api from '../../Api';
 import AlertModal from '../../Components/AlertModal';
-import { UserContext } from '../../Contexts/UserContext';
 import Global from '../sharedVariable';
 
 export default () => {
 
-    const { dispatch: userDispatch } = useContext(UserContext);
     const navigation = useNavigation();
     const [emailField, setEmailField] = useState('');
     const [passwordField, setPasswordField] = useState('');
@@ -41,6 +42,18 @@ export default () => {
     
     const CallExternalPolitica = () => {
         Linking.openURL(Global.lupa_politica, '_blank');
+    }
+
+    const CallExternalTermoDeUso = () => {
+        Linking.openURL(Global.lupa_termo, '_blank');
+    }
+
+    const CallExternalTcle = () => {
+        Linking.openURL(Global.lupa_tcle, '_blank');
+    }
+
+    const CallExternalTale = () => {
+        Linking.openURL(Global.lupa_tale, '_blank');
     }
 
     // Save
@@ -72,6 +85,7 @@ export default () => {
             {
                 await AsyncStorage.setItem('token', res.token);
                 await AsyncStorage.setItem('username', res.username);
+                await AsyncStorage.setItem('id', res.id.toString());
                 navigation.reset({
                     routes:[{ name:'MainTab'}]
                 });
@@ -91,6 +105,23 @@ export default () => {
     const changeModalVisible = (bool) => {
         setisModalVisible(bool);
     }
+
+    // Radio button
+    const [radioValue, setRadioValuw] = useState(-1);
+    var radio_props = [
+        {label: 'Maior ou igual a 18  ', value: 0 },
+        {label: 'Menor de 18', value: 1 }
+      ]; 
+
+    const radionPress = async (value) => {
+        if(value == 1){
+            setRadioValuw(1);
+        }
+        else{
+            setRadioValuw(0);
+        }
+    }
+
 
     return (
 
@@ -121,6 +152,24 @@ export default () => {
                         onChangeText={t=>setConfirmPasswordField(t)}
                         password={true}
                         ></SignInput>
+                    <RadioForm
+                            radio_props={radio_props}
+                            initial={-1}
+                            buttonSize={10}
+                            buttonOuterSize={20}
+                            formHorizontal={true}
+                            style={SharedStyles.radioFormText}
+                            onPress={(value) => { radionPress(value) }}
+                        />
+                    
+                    {
+                        radioValue == 0 &&
+                        <TextMessage>Ao se registrar, você concorda que leu e está de acordo com o <Link onPress={CallExternalTcle}>Registro de Consentimento Livre e Esclarecido para Pesquisas Em Ambiente Virtual</Link></TextMessage>
+                    }
+                    {
+                        radioValue == 1 &&
+                        <TextMessage>Ao se registrar, você concorda que leu e está de acordo com o <Link onPress={CallExternalTale}>Termo de Assentimento Livre e Esclarecido</Link></TextMessage>
+                    }
                     <CustomButton onPress={handleRegisterClick}>
                         <CustomButtonText>REGISTRE-SE</CustomButtonText>
                     </CustomButton>
@@ -143,7 +192,7 @@ export default () => {
 
             </View>
             <View style={SharedStyles.viewBottom}>
-                <FooterText>Ao se registrar, você concorda com os <Link onPress={CallExternalPolitica}>Termos de Uso e a nossa Política de Privacidade</Link></FooterText>
+                <FooterText>Ao se registrar, você concorda com os <Link onPress={CallExternalTermoDeUso}>Termos de Uso</Link> e a nossa <Link onPress={CallExternalPolitica}>Política de Privacidade</Link></FooterText>
             </View>
         </View>
     );

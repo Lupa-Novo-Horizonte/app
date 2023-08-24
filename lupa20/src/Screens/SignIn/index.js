@@ -51,6 +51,10 @@ export default () => {
         Linking.openURL(Global.lupa_politica, '_blank');
     }
 
+    const CallExternalTermoDeUso = () => {
+        Linking.openURL(Global.lupa_termo, '_blank');
+    }
+
     // Save
     const handleSignClick = async () => {
 
@@ -69,6 +73,7 @@ export default () => {
             if(res.token){
                 await AsyncStorage.setItem('token', res.token);    
                 await AsyncStorage.setItem('username', res.username);
+                await AsyncStorage.setItem('id', res.id.toString());
                 navigation.reset({
                     routes:[{ name:'MainTab'}]
                 });
@@ -143,7 +148,7 @@ export default () => {
 
             </View>
             <View style={SharedStyles.viewBottom}>
-                <FooterText>Ao se registrar, você concorda com os <Link onPress={CallExternalPolitica}>Termos de Uso e a nossa Política de Privacidade</Link></FooterText>
+                <FooterText>Ao se registrar, você concorda com os <Link onPress={CallExternalTermoDeUso}>Termos de Uso</Link> e a nossa <Link onPress={CallExternalPolitica}>Política de Privacidade</Link></FooterText>
             </View>
         </View>
     );

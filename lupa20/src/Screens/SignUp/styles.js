@@ -61,8 +61,16 @@ export const FooterText = styled.Text`
     text-align: center;
 `;
 
+export const TextMessage = styled.Text`
+    font-size: 13px;  
+    color: #707070;
+    text-align: center;
+    margin-bottom: 15px;
+`;
+
 export const Link = styled.Text`
     text-decoration-line: underline;
 `;
 
 export const Modal = styled.Modal``;
+

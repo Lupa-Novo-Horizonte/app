@@ -43,6 +43,22 @@ const CallExternalYoutube = () => {
   Linking.openURL(Global.lupa_youtube, '_blank')
 }
 
+const CallExternalPolitica = () => {
+  Linking.openURL(Global.lupa_politica, '_blank');
+}
+
+const CallExternalTermoDeUso = () => {
+    Linking.openURL(Global.lupa_termo, '_blank');
+}
+
+const CallExternalTcle = () => {
+    Linking.openURL(Global.lupa_tcle, '_blank');
+}
+
+const CallExternalTale = () => {
+    Linking.openURL(Global.lupa_tale, '_blank');
+}
+
 export default () => {
     return (
         <Container>
@@ -75,8 +91,28 @@ export default () => {
               <ClickableArea>
                 <PasswordLink onPress={CallExternalSite}>lupa.tecccog.net</PasswordLink>
               </ClickableArea>
+            </Area>   
+            <Area>
+                <ClickableArea>
+                  <PasswordLink onPress={CallExternalPolitica}>Política de Segurança</PasswordLink>
+                </ClickableArea>
             </Area>
-                        
+            <Area>
+              <ClickableArea>
+                <PasswordLink onPress={CallExternalTermoDeUso}>Termo de Uso</PasswordLink>
+              </ClickableArea>
+            </Area>
+            <Area>
+              <ClickableArea>
+                <PasswordLink onPress={CallExternalTale}>Termo de Assentimento Livre e Esclarecido</PasswordLink>
+              </ClickableArea>
+            </Area>
+            <Area>
+              <ClickableArea>
+                <PasswordLink onPress={CallExternalTcle}>Termo de Consentimento Livre e Esclarecido para Pesquisas em Ambiente Virtual</PasswordLink>
+              </ClickableArea>
+            </Area>
+
             <Area>
               <ClickableArea onPress={CallExternalFacebook}>
                 <Image style={{width:30, height:30}} source={require('../../Assets/facebook.png')} />

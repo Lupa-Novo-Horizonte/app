@@ -1,4 +1,3 @@
-import { TouchableHighlight } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 // Base
@@ -14,6 +13,23 @@ export const Scroller = styled.ScrollView`
 export const Area = styled.View`
     flex-direction: row;
     padding: 5px;
+`;
+
+export const ReportArea = styled.View`
+    padding-left: 5px;
+`;
+
+export const ReportText = styled.Text`
+    font-size: 13px;
+    color: #707070;
+    padding-bottom: 5px;
+`;
+
+export const ReportBoldText = styled.Text`
+    font-size: 13px;
+    color: #707070;
+    padding-bottom: 5px;
+    font-weight: bold;
 `;
 
 export const AvatarArea = styled.View`
@@ -51,6 +67,7 @@ export const MoreInfoText = styled.Text`
     color: #092654;
     font-size: 15px;
     margin-top: -10px;
+    font-weight: bold;
 `;
 
 export const ClickableArea = styled.TouchableOpacity``;

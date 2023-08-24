@@ -21,7 +21,7 @@ https://github.com/Lupa-Novo-Horizonte/app
 5. npm install react-native-eject
 6. npm i --save-dev @react-native-community/cli
 7. adb devices
-8. adb -s 1201160510A229B reverse tcp:58365 tcp:58365
+8. adb -s emulator-5554 reverse tcp:5500 tcp:5500
 	
 ::Install libraries in order to load the app correctly
 1. npm install react-native-geolocation-service
@@ -60,7 +60,7 @@ See script inside DB folder of app repository.
 
 #ngrok
 install ngrok
-open the port for remote connection using: ngrok http https://localhost:58365
+open the port for remote connection using: ngrok http https://localhost:5500
 
 # Generate APK for android
 1. react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res

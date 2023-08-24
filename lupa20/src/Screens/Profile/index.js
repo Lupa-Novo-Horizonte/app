@@ -6,16 +6,20 @@ import {
     Container,
     Scroller,
     Area,
+    ReportArea,
+    ReportText,
+    ReportBoldText,
     AvatarArea,
     TitleText,
     BodyText,
     PasswordLink,
     LogoutText,
-    ClickableArea
+    ClickableArea,
 } from './styles';
 
 import TopBar from '../../Components/CustomTopBar';
 import HorizontalBar from '../../Components/HorizontalBar';
+import Api from '../../Api';
 
 export default () => {
   
@@ -27,10 +31,6 @@ export default () => {
     setUsername(res);
   }
 
-  useEffect(() => {
-    GetUsername();
-  });
-  
   const Logout = async () => {
     await AsyncStorage.removeItem('token')
     navigation.reset({
@@ -42,9 +42,45 @@ export default () => {
     navigation.navigate('SignInUpdate')
   }
 
-  const CallExternal = () => {
-    Linking.openURL('http://www.tecccog.net', '_blank'); 
+  const [report, setReport] = useState();
+  const GetReport = async () => {
+    let token = await AsyncStorage.getItem('token');
+    let id = await AsyncStorage.getItem('id');
+      let res = await Api.getReport(token, Number(id));
+      if(res != null){
+          setReport(res.chartTable);
+      } 
+      else 
+      {
+          changeModalVisible(true);
+          setMessage('Não foi carregar dados do relatório. Tente novamente mais tarde.');
+      }
   }
+
+  useEffect(() => {
+    GetUsername();
+    GetReport();
+  },[]);
+ 
+ const RenderReport = () => {
+  return(
+    <ReportArea>      
+      <ReportText>Calçadas e Asfalto:  {report.Asphalt.total}</ReportText>
+      
+      <ReportText>Coleta de Lixo: {report.Collect.total}</ReportText>
+      
+      <ReportText>Iluminação Pública: {report.Light.total}</ReportText>
+      
+      <ReportText>Água Potável: {report.Water.total}</ReportText>
+      
+      <ReportText>Limpeza Urbana: {report.Trash.total}</ReportText> 
+      
+      <ReportText>Tratamento de Esgoto: {report.Sewer.total}</ReportText>
+
+      <ReportBoldText>Total: {report.All.total}</ReportBoldText>
+    </ReportArea>
+    );
+  };
 
   return (
         <Container>
@@ -92,6 +128,19 @@ export default () => {
                 </Area>
 
               <Text>{"\n"}</Text>
+
+              <Area>
+                <TitleText>Minha Coleta</TitleText>
+              </Area>
+              <Area>
+                <HorizontalBar/>
+              </Area>
+              
+              {
+                report != null &&
+                  <RenderReport />
+              }
+
             </Scroller>
         </Container>
     );
