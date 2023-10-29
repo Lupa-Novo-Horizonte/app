@@ -1,4 +1,4 @@
-const BASE_API = 'https://vps39767.publiccloud.com.br/api'; //'http://vps39767.publiccloud.com.br/api'
+const BASE_API = 'http://vps39767.publiccloud.com.br/api'; //'http://vps39767.publiccloud.com.br/api'
 
 export default {
 

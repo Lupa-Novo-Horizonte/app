@@ -144,14 +144,14 @@ export default () => {
               coordinate={{ latitude: item.latitude, longitude: item.longitude }} >
                 <Image source={iconColor} style={{height: 80, width: 49}}></Image>
                 <Callout>
-                <View style={{height: 150, width: 280}}>
-                  <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
-                  <Text>{question1}</Text>
-                  <Text>{question2}</Text>
-                  <Text>{question3}</Text>
-                  <Text>{question4}</Text>
-                  <Text>{question5}</Text>
-                  <Text style={{fontWeight: '300', textAlign: 'right'}}>Id: {item.type}{item.id}</Text>
+                <View style={{height: 150, width: 280, backgroundColor: "#FFFFFF" }}>
+                  <Text style={{fontWeight: 'bold', color:"#7A7A7A"}}>{item.title}</Text>
+                  <Text style={{color:"#7A7A7A"}}>{question1}</Text>
+                  <Text style={{color:"#7A7A7A"}}>{question2}</Text>
+                  <Text style={{color:"#7A7A7A"}}>{question3}</Text>
+                  <Text style={{color:"#7A7A7A"}}>{question4}</Text>
+                  <Text style={{color:"#7A7A7A"}}>{question5}</Text>
+                  <Text style={{fontWeight: '300', textAlign: 'right', color:"#7A7A7A"}}>Id: {item.type}{item.id}</Text>
                 </View>
                 </Callout>
               </Marker>
@@ -160,7 +160,7 @@ export default () => {
         else
         {
           return(
-            <Polyline key={index} coordinates={JSON.parse(item.path)} strokeWidth={4} strokeColor={polylineColor} />
+            <Polyline key={index} coordinates={JSON.parse(item.path)} strokeWidth={6} strokeColor={polylineColor} lineJoin="round" lineCap='square' miterLimit={20}/>
           )
         }
     });
@@ -179,6 +179,7 @@ export default () => {
         loadingIndicatorColor="#092654"
         region={region.coords}
         zoomEnabled={true}
+        zoomControlEnabled={true}
         scrollEnabled={true}
         showsScale={true}
         style={{
