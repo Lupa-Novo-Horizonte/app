@@ -293,7 +293,10 @@ export default () => {
                             defaultButtonText='Selecione'
                             key={'ddl01Key'}
                             data={yesNo} 
-                            onSelect={(selectedItem, index) => { setDdl01((selectedItem=='Sim'? true : false))} }
+                            onSelect={(selectedItem, index) => { 
+                                setDdl01((selectedItem=='Sim'? true : false)) 
+                                setDdl02((selectedItem=='Não'? false : null))
+                            }}
                             buttonStyle={sharedStyles.ddlButton}
                             buttonTextStyle={sharedStyles.ddlButtonText}
                             dropdownStyle={sharedStyles.ddlStyle}
@@ -303,30 +306,55 @@ export default () => {
                         </View>
                     </View>
 
-                    <View style={sharedStyles.area}>
-                        <View style={sharedStyles.subArea01}>
-                            <View style={sharedStyles.subSubArea01}>
-                                <Text style={sharedStyles.titleText}>As luzes estão funcionando?</Text>
+                    {ddl01 == true ? 
+                        <View style={sharedStyles.area}>
+                            <View style={sharedStyles.subArea01}>
+                                <View style={sharedStyles.subSubArea01}>
+                                    <Text style={sharedStyles.titleText}>As luzes estão funcionando?</Text>
+                                </View>
+                                <View style={sharedStyles.subSubArea02}>
+                                    <HorizontalBar />
+                                </View>
                             </View>
-                            <View style={sharedStyles.subSubArea02}>
-                                <HorizontalBar />
+                            <View style={sharedStyles.subArea02}>
+                                <SelectDropdown
+                                    defaultButtonText='Selecione'
+                                    key={'ddl02Key'}
+                                    data={yesNo} 
+                                    onSelect={(selectedItem, index) => { setDdl02((selectedItem=='Sim'? true : false))}}
+                                    buttonStyle={sharedStyles.ddlButton}
+                                    buttonTextStyle={sharedStyles.ddlButtonText}
+                                    dropdownStyle={sharedStyles.ddlStyle}
+                                    rowStyle={ sharedStyles.ddlRow}
+                                    rowTextStyle={ sharedStyles.ddlRowText}
+                                    />
                             </View>
                         </View>
-                        <View style={sharedStyles.subArea02}>
-                            <SelectDropdown
-                                defaultButtonText='Selecione'
-                                key={'ddl02Key'}
-                                data={yesNo} 
-                                onSelect={(selectedItem, index) => { setDdl02((selectedItem=='Sim'? true : false))}}
-                                buttonStyle={sharedStyles.ddlButton}
-                                buttonTextStyle={sharedStyles.ddlButtonText}
-                                dropdownStyle={sharedStyles.ddlStyle}
-                                rowStyle={ sharedStyles.ddlRow}
-                                rowTextStyle={ sharedStyles.ddlRowText}
-                                />
+                        : /* Disabled dropdown, gray out */
+                        <View style={sharedStyles.area}>
+                            <View style={sharedStyles.subArea01}>
+                                <View style={sharedStyles.subSubArea01}>
+                                    <Text style={sharedStyles.titleTextDisabled}>Se sim, as luzes estão funcionando?</Text>
+                                </View>
+                                <View style={sharedStyles.subSubArea02}>
+                                    <HorizontalBar />
+                                </View>
+                            </View>
+                            <View style={sharedStyles.subArea02}>
+                                <SelectDropdown
+                                    defaultButtonText={ddl01 == false ? 'Não' : 'Selecione'}
+                                    disabled={true}
+                                    key={'ddl02Key'}
+                                    buttonStyle={sharedStyles.ddlButtonDisabled}
+                                    buttonTextStyle={sharedStyles.ddlButtonTextDisabled}
+                                    dropdownStyle={sharedStyles.ddlStyleDisabled}
+                                    rowStyle={ sharedStyles.ddlRowDisabled}
+                                    rowTextStyle={ sharedStyles.ddlRowTextDisabled}
+                                    />
+                            </View>
                         </View>
-                    </View>
-                
+                    }
+                                    
                     <View style={sharedStyles.area}>
                         <View style={sharedStyles.subArea01}>   
                             <View style={sharedStyles.subSubArea01}>

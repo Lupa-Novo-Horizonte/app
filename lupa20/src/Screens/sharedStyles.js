@@ -42,6 +42,49 @@ ddlButton:{
 },
 
 
+// Forms disabled
+titleTextDisabled: {
+  fontSize: 13,   
+  color: '#CCC',
+  marginBottom: -10
+},
+
+ddlButtonTextDisabled:{
+  fontSize: 12,
+  color: '#EEE'
+},
+
+ddlStyleDisabled:{
+  backgroundColor: '#fff',
+  width:90,
+  borderRadius:5,
+  borderColor: '#EEE',
+  borderWidth:1
+},
+
+ddlRowDisabled:{
+  backgroundColor: '#fff',
+  borderBottomColor: '#EEE',
+  height: 30,
+  width:90
+},
+
+ddlRowTextDisabled:{
+  fontSize: 12,
+  color: '#EEE'
+},
+
+ddlButtonDisabled:{
+  backgroundColor: '#fff',
+  width:90,
+  borderRadius:5,
+  borderColor: '#707070',
+  borderWidth:.5, 
+  height: 30
+},
+
+
+
 // Forms
 ddlButtonText:{
   fontSize: 12,
